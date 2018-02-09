@@ -38,3 +38,13 @@
   with_items:
           - "{{ users_list }}"
 
+- name: ensure default editor is vim
+  become: true
+  become_user: root
+  lineinfile:
+          dest: "{{ /home/item.user/.bashrc }}"
+          state: present
+          line: "{{ item.editor }}"
+  with_nested:
+          - "{{ users_list }}"
+          - ["export VISUAL=vim", "export EDITOR='$VISUAL'"]

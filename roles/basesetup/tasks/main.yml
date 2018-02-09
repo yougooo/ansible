@@ -41,9 +41,10 @@
           update_cache: yes
 
 - name: ensure default editor is vim
-  become_user: item.
-  lineinfile:
-          dest: ~/
-          state: present
-          line:  "{{ item }}"
-          with_items:
+  become: true
+  become_user: root
+  alternatives:
+          name: editor 
+          link: /usr/bin/vim
+          path: /usr/bin/vim.basic
+  

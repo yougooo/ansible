@@ -1,0 +1,18 @@
+# user_name for manage
+users_list:
+        - user_name: test1
+          user_state: present
+          user_bool: no
+          user_groups: []
+          pub_key_string: 'ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAgRmMBKdmQLsE8TOwlOoGpQQHYQtCLMWHskCnkuvtsIvNIO7+7Z9Tw/c/Njg4oq/9jyAN+owhfBO8wmV19gXwn3XlC2IxJtJPd0btGfNvyb/XPaEMeKOE35EViIVHnT7xpVdlz9V6P3TNslDBTIJ6HHQ0ObRUkBVPfJJ2pOtgn8iKltZoBCCCl41OASGn8dP4kpVRwXDKPm/X8Se8zcB5JnSpKiotaXDRp0SL6/C84ug18IV+xauNsfkB3Uh5WwChFcrJ+7uIFJ06I15O22JHMZWLPFlJieMaz6/lFvyg50CQcxPiwYRMGWsYjiwgbMQCYLtL84Gf3rdKRaEvPMFF2Q== alex'
+        - user_name: test2
+          user_state: absent
+          user_bool: yes
+          pub_key_string: ''
+
+# state/ userlenight.vim'
+# user 'present' or 'absent' depend on creating or removing user from system
+#user_state: present
+# 'yes' if we going to remove user, 'no' if state defined as present
+#user_bool: no
+#pub_key_string: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+Fk6Gf7H9Azf2bSaZ7H24pg4aRQ04PFydhFwOpG1ibpX0r9fOf98mXnQABnnrEOvjKLPRJus1vvElqoZgl9Z1JYu0l7rLQpYWfdtj847iemI8z7wR5nRHxate2DjR/SgpE0V+Vp7ouP0EcCPXaxghMZfB6iLWs/zHH+W2Ixf6C4A9hPuvOY0xh6R1ceoMFsbyu7TvYLHAsnW0ESiGlMf8crKpwclntkYNMZSmPuDpcApePveG2/Fo6vPn2pXj2GBVYxQ4n8+zcPjtyPQAxVUPYqBPTqF1xaoApkN0Hdb6oF1G3yuV8jM+BDQSsb80IrNmSLlEyjrOzMoGxxdeA321 alex@localhost"

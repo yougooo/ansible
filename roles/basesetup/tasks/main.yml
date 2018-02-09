@@ -1,0 +1,49 @@
+---
+
+- name: ensure base tool install
+  become: yes
+  become_user: root
+  apt:
+          name: "{{ item }}"
+          state: latest
+          update_cache: yes
+  with_items:
+          - vim
+          - curl
+          - htop
+          - iotop
+          - apt-transport-https
+          - git
+          - ca-certificates
+          - software-properties-common
+          
+- name: ensure docker key present
+  become: yes
+  become_user: root
+  apt_key:
+          url: https://download.docker.com/linux/debian/gpg
+          state: present
+
+- name: add repo
+  become: yes
+  become_user: root
+  apt_repository:
+          repo:  deb [arch=amd64] https://download.docker.com/linux/debian    stretch    stable
+
+          state: present
+
+- name: ensure docker install
+  become: yes
+  become_user: root
+  apt:
+          name: docker-ce
+          state: latest
+          update_cache: yes
+
+- name: ensure default editor is vim
+  become_user: item.
+  lineinfile:
+          dest: ~/
+          state: present
+          line:  "{{ item }}"
+          with_items:

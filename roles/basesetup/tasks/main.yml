@@ -4,46 +4,46 @@
   become: yes
   become_user: root
   apt:
-          name: "{{ item }}"
-          state: latest
-          update_cache: yes
+      name: "{{ item }}"
+      state: latest
+      update_cache: yes
   with_items:
-          - vim
-          - curl
-          - htop
-          - iotop
-          - apt-transport-https
-          - git
-          - ca-certificates
-          - software-properties-common
-          
+      - vim
+      - curl
+      - htop
+      - iotop
+      - apt-transport-https
+      - git
+      - ca-certificates
+      - software-properties-common
+      
 - name: ensure docker key present
   become: yes
   become_user: root
   apt_key:
-          url: https://download.docker.com/linux/debian/gpg
-          state: present
+      url: https://download.docker.com/linux/debian/gpg
+      state: present
 
 - name: add repo
   become: yes
   become_user: root
   apt_repository:
-          repo:  deb [arch=amd64] https://download.docker.com/linux/debian    stretch    stable
-          state: present
+      repo:  deb [arch=amd64] https://download.docker.com/linux/debian    stretch    stable
+      state: present
 
 - name: ensure docker install
   become: yes
   become_user: root
   apt:
-          name: docker-ce
-          state: latest
-          update_cache: yes
+      name: docker-ce
+      state: latest
+      update_cache: yes
 
 - name: ensure default editor is vim
   become: true
   become_user: root
   alternatives:
-          name: editor 
-          link: /usr/bin/vim
-          path: /usr/bin/vim.basic
-  
+      name: editor 
+      link: /usr/bin/vim
+      path: /usr/bin/vim.basic
+

@@ -4,38 +4,38 @@
   become: True
   become_user: root
   user:
-          name: "{{ item.user_name }}"
-          shell: /bin/bash
-          state: "{{ item.user_state }}"
-          remove: "{{ item.user_bool }}"
-          groups: "{{ item.user_groups|join(',') if item.groups is defined else '' }}"
-          generate_ssh_key: yes
-          ssh_key_bits: 2048
-          ssh_key_file: .ssh/id_rsa
+      name: "{{ item.user_name }}"
+      shell: /bin/bash
+      state: "{{ item.user_state }}"
+      remove: "{{ item.user_bool }}"
+      groups: "{{ item.user_groups|join(',') if item.groups is defined else '' }}"
+      generate_ssh_key: yes
+      ssh_key_bits: 2048
+      ssh_key_file: .ssh/id_rsa
   with_items:
-          - "{{ users_list }}"
+      - "{{ users_list }}"
 
 - name: ensure ssh key added
   become: yes
   become_user: root
   authorized_key:
-          user: "{{ item.user_name }}"
-          state: "{{ item.user_state }}"
-          key: "{{ item.pub_key_string }}"
+      user: "{{ item.user_name }}"
+      state: "{{ item.user_state }}"
+      key: "{{ item.pub_key_string }}"
   with_items:
-          - "{{ users_list }}"
+      - "{{ users_list }}"
   when:
-          - item.user_state == 'present' 
+      - item.user_state == 'present' 
 
 - name: ensure in user privilege
   become: yes
   become_user: root
   lineinfile:
-          dest: /etc/sudoers
-          state: "{{ item.user_state }}"
-          regexp: "^{{ item.user_name }}"
-          line: "{{ item.user_name }} ALL=(ALL) NOPASSWD:ALL"
+      dest: /etc/sudoers
+      state: "{{ item.user_state }}"
+      regexp: "^{{ item.user_name }}"
+      line: "{{ item.user_name }} ALL=(ALL) NOPASSWD:ALL"
   with_items:
-          - "{{ users_list }}"
+      - "{{ users_list }}"
 
 

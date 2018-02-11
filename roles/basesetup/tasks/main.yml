@@ -29,7 +29,6 @@
   become_user: root
   apt_repository:
           repo:  deb [arch=amd64] https://download.docker.com/linux/debian    stretch    stable
-
           state: present
 
 - name: ensure docker install

@@ -8,7 +8,8 @@
       shell: /bin/bash
       state: "{{ item.user_state }}"
       remove: "{{ item.user_bool }}"
-      groups: "{{ item.user_groups|join(',') if item.groups is defined else '' }}"
+      append: yes
+      groups: "{{ item.user_groups|join(',') if item.user_groups is defined else ''}}"
       generate_ssh_key: yes
       ssh_key_bits: 2048
       ssh_key_file: .ssh/id_rsa
@@ -21,7 +22,7 @@
   authorized_key:
       user: "{{ item.user_name }}"
       state: "{{ item.user_state }}"
-      key: "{{ item.pub_key_string }}"
+      key: "{{ item.pub_key_list|join('') }}"
   with_items:
       - "{{ users_list }}"
   when:

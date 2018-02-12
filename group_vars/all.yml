@@ -1,13 +1,18 @@
 # user_name for manage
 users_list:
-        - user_name: test1
-          user_state: present
-          user_bool: no
-          user_groups: []
-          editor: ''
-          pub_key_string: 'ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAgRmMBKdmQLsE8TOwlOoGpQQHYQtCLMWHskCnkuvtsIvNIO7+7Z9Tw/c/Njg4oq/9jyAN+owhfBO8wmV19gXwn3XlC2IxJtJPd0btGfNvyb/XPaEMeKOE35EViIVHnT7xpVdlz9V6P3TNslDBTIJ6HHQ0ObRUkBVPfJJ2pOtgn8iKltZoBCCCl41OASGn8dP4kpVRwXDKPm/X8Se8zcB5JnSpKiotaXDRp0SL6/C84ug18IV+xauNsfkB3Uh5WwChFcrJ+7uIFJ06I15O22JHMZWLPFlJieMaz6/lFvyg50CQcxPiwYRMGWsYjiwgbMQCYLtL84Gf3rdKRaEvPMFF2Q== alex'
-        - user_name: alex
-          user_state: present
-          user_bool: yes
-          pub_key_string: ''
-          editor: "export VISUAL=vim\nexport EDITOR=\"$VISUAL\""
+    - user_name: test1
+      user_state: present
+      user_bool: no
+      user_groups:
+          - sudo
+          - docker
+      editor: ''
+      pub_key_list: ['ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAgRmMBKdmQLsE8TOwlOoGpQQHYQtCLMWHskCnkuvtsIvNIO7+7Z9Tw/c/Njg4oq/9jyAN+owhfBO8wmV19gXwn3XlC2IxJtJPd0btGfNvyb/XPaEMeKOE35EViIVHnT7xpVdlz9V6P3TNslDBTIJ6HHQ0ObRUkBVPfJJ2pOtgn8iKltZoBCCCl41OASGn8dP4kpVRwXDKPm/X8Se8zcB5JnSpKiotaXDRp0SL6/C84ug18IV+xauNsfkB3Uh5WwChFcrJ+7uIFJ06I15O22JHMZWLPFlJieMaz6/lFvyg50CQcxPiwYRMGWsYjiwgbMQCYLtL84Gf3rdKRaEvPMFF2Q== alex']
+    - user_name: alex
+      user_state: present
+      user_groups: 
+          - sudo
+          -  docker
+      user_bool: no
+      pub_key_list: ''
+      editor: ""

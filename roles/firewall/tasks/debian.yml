@@ -1,0 +1,54 @@
+---
+
+- name: ensure iptables install
+  apt:
+      name: "{{ item }}"
+      state: present
+  with_items:
+      - iptables
+      - iptables-persistent
+
+- name: ensure ufw disabled
+  become: yes
+  become_user: root
+  ufw:
+      state: disabled
+  ignore_errors: yes
+
+- name: ensure ufw absent in system
+  become: yes
+  become_user: root
+  apt:
+      name: ufw
+      state: absent
+      purge: yes
+
+- name: ensure iptables rules loaded
+  become: yes
+  become_user: root
+  template:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest  }}"
+      mode: "0755"
+      owner: root
+      group: root
+  with_items:
+      - {src:"{{ iptables_rules_path }}", dest: '/etc/iptables.up.rules'}
+      - {src:"{{ iptables_rules_recovery }}", dest: '/etc/network/if-up.d/iptables'}
+  notify: reload iptables
+
+- name: ensure docker iptables restored
+  become: yes
+  become_user: root
+  template:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+      mode: 0775
+      owner: root
+      group: root
+  with_items:
+      - {src:"{{ docker_rules_path }}", dest:'/etc/docker.up.rules'}
+      - {src:"{{ docker_rules_recovery }}", dest:'/etc/network/if-up.d/iptables_docker'}
+  notify: reload docker rules
+  when: "{{ docker_book }}" == yes
+

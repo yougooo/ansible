@@ -49,6 +49,6 @@
   with_items:
       - {src:"{{ docker_rules_path }}", dest:'/etc/docker.up.rules'}
       - {src:"{{ docker_rules_recovery }}", dest:'/etc/network/if-up.d/iptables_docker'}
-  notify: reload docker rules
-  when: "{{ docker_book }}" == yes
+  notify: reload docker
+  when: "{{ docker_bool }}" == yes
 

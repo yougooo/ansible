@@ -1,0 +1,11 @@
+---
+
+- name: reload iptables
+  become: yes
+  become_user: root
+  shell: "/etc/network/if-pre-up.d/{{ iptables_recovery }}"
+
+- name: reload docker
+  become: yes
+  become_user: root
+  shell: "/etc/network/if-pre-up.d/{{ docker_revocery }}"

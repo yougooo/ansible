@@ -22,7 +22,7 @@
   authorized_key:
       user: "{{ item.user_name }}"
       state: "{{ item.user_state }}"
-      key: "{{ item.pub_key_list|join('') }}"
+      key: "{{ item.pub_key_list|join('\n') if item.pub_key_list is defined else ''}}"
   with_items:
       - "{{ users_list }}"
   when:

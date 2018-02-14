@@ -23,13 +23,12 @@
       state: absent
       purge: yes
 
-- name: ensure iptables rules
+- name: ensure iptables bash script present
   become: yes
   become_user: root
-  file:
+  copy:
+      src: clear_iptables.sh
       dest: "{{ clear_iptables_path }}"
-      src: "{{ clear_iptables }}"
-      state: present
       owner: root
       group: root
       mode: 0755
@@ -66,4 +65,5 @@
       - {src: "{{ docker_rules_path }}", dest: '/etc/docker.up.rules'}
       - {src: "{{ docker_rules_recovery }}", dest: '/etc/network/if-up.d/iptables_docker'}
   notify: reload docker
-  when: "{{ docker_bool }}" == yes
+  when: 
+      -  docker_bool == yes

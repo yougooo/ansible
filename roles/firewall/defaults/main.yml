@@ -18,7 +18,7 @@ docker_rules_path: docker.up.rules.j2
 docker_rules_recovery: docker_recovery.j2
 
 clear_iptables: clear_iptables.sh
-clear_iptables_path: "tmp/{{ clear_iptables }}"
+clear_iptables_path: "/tmp/{{ clear_iptables }}"
 
 
 allowed_tcp_ports: [22, 80, 443, 3306, 5432]

@@ -1,4 +1,5 @@
 # user_name for manage
+
 users_list:
     - user_name: test1
       user_state: present

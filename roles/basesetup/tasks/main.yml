@@ -22,7 +22,7 @@
   become: yes
   become_user: root
   lineinfile:
-      src: /etc/default/sysstat
+      dest: /etc/default/sysstat
       state: present
       regexp: 'ENABLED=\"false\"'
       line: 'ENABLED=\"true\"'

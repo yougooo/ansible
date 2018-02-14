@@ -1,2 +1,2 @@
-
-localhost
+[test]
+test_vm ansible_host=35.227.19.36

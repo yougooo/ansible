@@ -1,5 +1,34 @@
-iptables_rules_path:
+mangle:
+    - prerouting_policy: "ACCEPT"
+      input_policy: "ACCEPT"
+      forward_policy: "ACCEPT"
+      output_policy: "ACCEPT"
+      postrouting_policy: "ACCEPT"
+
+filter:
+    - input_policy: "ACCEPT"
+      forward_policy: "ACCEPT"
+      output_policy: "ACCEPT"
+
+iptables_rules_path: iptables.up.rules.j2
 iptables_rules_recovery: iptables_recovery.j2
+
 docker_bool: yes
 docker_rules_path: docker.up.rules.j2
 docker_rules_recovery: docker_recovery.j2
+
+clear_iptables: clear_iptables.sh
+clear_iptables_path: "tmp/{{ clear_iptables }}"
+
+
+allowed_tcp_ports: [22, 80, 443, 3306, 5432]
+forwarded_tcp_ports: []
+
+allowed_udp_ports: []
+forwarded_udp_ports: []
+
+allowed_network: []
+
+restricted_network: []
+
+custom_raw_rules: []

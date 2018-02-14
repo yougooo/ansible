@@ -1,0 +1,53 @@
+*mangle
+
+:PREROUTING {{ mangle.prerouting_policy }} [0:0]
+:INPUT {{ mangle.input_policy }} [0:0]
+:FORWARD {{ mangle.forward_policy }} [0:0]
+:OUTPUT {{ mangle.output_policy }} [0:0]
+:POSTROUTING {{ mangle.postrouting_policy }} [0:0]
+
+COMMIT
+
+*filter
+
+:INPUT {{ filter.input_policy }} [0:0]
+:FORWARD {{ filter.forward_policy }} [0:0]
+:OUTPUT {{ filter.output_policy }} [0:0]
+
+# allow all loopback traffic
+-A INPUT -i lo -j ACCEPT
+-A OUTPUT -o lo -j ACCEPT
+
+# allows established and related incoming and outgoing connections
+-A INPUT -m conntrack --ctstate ESTABLISHED, RELATED -j ACCEPT
+-A OUTPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT
+
+
+# allows tcp ports
+{% if  {{ allowed_tcp_ports }} %}
+   {% for tcp_port in allowed_tcp_ports %}
+-A INPUT -p -tcp --dport {{tcp_port}} -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+   {% endfor %}
+{% endif %}
+
+# block ip from restricted_network list
+{% if {{restricted_network}} %}
+   {% for addr in {{ restricted_ip_addr }} %}
+-A INPUT -s {{ addr }} -j REJECT
+   {% endfor %}
+{% endif %}
+
+{% if custom_raw_rules%}
+   {% for rule in custom_raw_rules %}
+{{ rule }}
+   {% endfor %}
+{% endif %}
+
+# log iptables denied calls
+-A INPUT -m limit --limit 5/min -j LOG --log-prefix "iptables denied:" --log-level 7
+# reject all other inbound calls
+-A INPUT -j REJECT
+-A FORWARD -j REJECT
+
+COMMIT
+

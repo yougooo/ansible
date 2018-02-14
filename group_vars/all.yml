@@ -12,7 +12,7 @@ users_list:
       user_state: present
       user_groups: 
           - sudo
-          -  docker
+          - docker
       user_bool: no
       pub_key_list: ''
       editor: ""

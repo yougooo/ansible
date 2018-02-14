@@ -8,4 +8,4 @@
 - name: reload docker
   become: yes
   become_user: root
-  shell: "/etc/network/if-pre-up.d/{{ docker_revocery }}"
+  shell: "/etc/network/if-pre-up.d/{{ docker_recovery }}"

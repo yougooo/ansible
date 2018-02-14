@@ -28,13 +28,13 @@
   become_user: root
   template:
       src: "{{ item.src }}"
-      dest: "{{ item.dest  }}"
-      mode: "0755"
+      dest: "{{ item.dest }}"
+      mode: 0755
       owner: root
       group: root
   with_items:
-      - {src:"{{ iptables_rules_path }}", dest: '/etc/iptables.up.rules'}
-      - {src:"{{ iptables_rules_recovery }}", dest: '/etc/network/if-up.d/iptables'}
+      - {src: "{{ iptables_rules_path }}", dest: '/etc/iptables.up.rules'}
+      - {src: "{{ iptables_rules_recovery }}", dest: '/etc/network/if-up.d/iptables'}
   notify: reload iptables
 
 - name: ensure docker iptables restored
@@ -47,8 +47,8 @@
       owner: root
       group: root
   with_items:
-      - {src:"{{ docker_rules_path }}", dest:'/etc/docker.up.rules'}
-      - {src:"{{ docker_rules_recovery }}", dest:'/etc/network/if-up.d/iptables_docker'}
+      - {src: "{{ docker_rules_path }}", dest: '/etc/docker.up.rules'}
+      - {src: "{{ docker_rules_recovery }}", dest: '/etc/network/if-up.d/iptables_docker'}
   notify: reload docker
   when: "{{ docker_bool }}" == yes
 

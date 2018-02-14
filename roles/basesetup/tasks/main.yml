@@ -16,7 +16,7 @@
       - git
       - ca-certificates
       - software-properties-common
-      
+
 - name: ensure docker key present
   become: yes
   become_user: root
@@ -46,4 +46,3 @@
       name: editor 
       link: /usr/bin/vim
       path: /usr/bin/vim.basic
-

@@ -1,0 +1,8 @@
+---
+
+- name: reload sysstat
+  become: yes
+  become_user: root
+  service:
+      name: sysstat
+      state: restarted

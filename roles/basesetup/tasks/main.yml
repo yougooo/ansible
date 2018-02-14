@@ -9,6 +9,7 @@
       update_cache: yes
   with_items:
       - vim
+      - sysstat
       - curl
       - htop
       - iotop
@@ -16,6 +17,16 @@
       - git
       - ca-certificates
       - software-properties-common
+
+- name: ensure sysstart is enable
+  become: yes
+  become_user: root
+  lineinfile:
+      src: /etc/default/sysstat
+      state: present
+      regexp: 'ENABLED=\"false\"'
+      line: 'ENABLED=\"true\"'
+  notify: reload sysstat
 
 - name: ensure docker key present
   become: yes

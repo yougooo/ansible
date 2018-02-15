@@ -1,14 +1,14 @@
 mangle:
     - prerouting_policy: "ACCEPT"
-      input_policy: "ACCEPT"
-      forward_policy: "ACCEPT"
-      output_policy: "ACCEPT"
-      postrouting_policy: "ACCEPT"
+    - input_policy: "ACCEPT"
+    - forward_policy: "ACCEPT"
+    - output_policy: "ACCEPT"
+    - postrouting_policy: "ACCEPT"
 
 filter:
     - input_policy: "ACCEPT"
-      forward_policy: "ACCEPT"
-      output_policy: "ACCEPT"
+    - forward_policy: "ACCEPT"
+    - output_policy: "ACCEPT"
 
 iptables_rules_path: iptables.up.rules.j2
 iptables_rules_recovery: iptables_recovery.j2
@@ -31,4 +31,8 @@ allowed_network: []
 
 restricted_network: []
 
-custom_raw_rules: []
+custom_mangle_raw_rules: ['-I PREROUTING -p tcp -m tcp --dport 80,443 -m state --state NEW -m tcpmss ! --mss 536:65535 -j DROP']
+
+custom_filter_raw_rules: ['-A INPUT -p tcp -m tcp ! --tcp-flags FIN,SYN,RST,ACK SYN -m state --state NEW -j DROP',
+                          '-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j DROP'
+                         ]

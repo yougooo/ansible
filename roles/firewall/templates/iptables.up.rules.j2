@@ -6,6 +6,12 @@
 :OUTPUT {{ mangle.output_policy|string }} [0:0]
 :POSTROUTING {{ mangle.postrouting_policy|string }} [0:0]
 
+{% if custom_mangle_raw_rules %}
+   {% for rule in custom_mangle_raw_rules %}
+{{ rule }}
+   {% endfor %}
+{% endif %}
+
 COMMIT
 
 *filter
@@ -24,21 +30,21 @@ COMMIT
 
 
 # allows tcp ports
-{% if  {{ allowed_tcp_ports }} %}
+{% if   allowed_tcp_ports  %}
    {% for tcp_port in allowed_tcp_ports %}
 -A INPUT -p -tcp --dport {{tcp_port}} -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
    {% endfor %}
 {% endif %}
 
 # block ip from restricted_network list
-{% if {{restricted_network}} %}
-   {% for addr in {{ restricted_ip_addr }} %}
+{% if restricted_network  %}
+   {% for addr in restricted_network %}
 -A INPUT -s {{ addr }} -j REJECT
    {% endfor %}
 {% endif %}
 
-{% if custom_raw_rules%}
-   {% for rule in custom_raw_rules %}
+{% if custom_filter_raw_rules %}
+   {% for rule in custom_filter_raw_rules %}
 {{ rule }}
    {% endfor %}
 {% endif %}

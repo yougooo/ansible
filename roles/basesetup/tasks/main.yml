@@ -1,8 +1,5 @@
 ---
 
-- include: jenkins.yml
-  when: inventory_hostname in groups['jenkins']
-
 - name: ensure base tool install
   become: yes
   become_user: root
@@ -60,3 +57,6 @@
       name: editor 
       link: /usr/bin/vim
       path: /usr/bin/vim.basic
+
+- include: jenkins.yml
+  when: inventory_hostname in groups['jenkins']

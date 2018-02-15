@@ -34,7 +34,7 @@
   apt_key:
       url: https://download.docker.com/linux/debian/gpg
       state: present
-  when: docker_bool = "True"
+  when: docker_bool == "True"
 
 - name: add docker repo
   become: yes
@@ -42,7 +42,7 @@
   apt_repository:
       repo:  deb [arch=amd64] https://download.docker.com/linux/debian    stretch    stable
       state: present
-  when: docker_bool = "True"
+  when: docker_bool == "True"
 
 - name: ensure docker install
   become: yes
@@ -51,7 +51,7 @@
       name: docker-ce
       state: latest
       update_cache: yes
-  when: docker_bool = "True"
+  when: docker_bool == "True"
 
 - name: ensure default editor is vim
   become: true

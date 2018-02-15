@@ -30,7 +30,7 @@
       path: /etc/iptables/rules.v4
       state: absent
 
-- name: ensure iptables rules loaded and restored
+- name: ensure iptables rules loaded
   become: yes
   become_user: root
   template:

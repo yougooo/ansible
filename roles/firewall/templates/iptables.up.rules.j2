@@ -1,18 +1,18 @@
 *mangle
 
-:PREROUTING {{ mangle.prerouting_policy }}|srting [0:0]
-:INPUT {{ mangle.input_policy }}|string [0:0]
-:FORWARD {{ mangle.forward_policy }}|string [0:0]
-:OUTPUT {{ mangle.output_policy }}|string [0:0]
-:POSTROUTING {{ mangle.postrouting_policy }}|string [0:0]
+:PREROUTING {{ mangle.prerouting_policy|string }} [0:0]
+:INPUT {{ mangle.input_policy|string }} [0:0]
+:FORWARD {{ mangle.forward_policy|string }} [0:0]
+:OUTPUT {{ mangle.output_policy|string }} [0:0]
+:POSTROUTING {{ mangle.postrouting_policy|string }} [0:0]
 
 COMMIT
 
 *filter
 
-:INPUT {{ filter.input_policy }}|string [0:0]
-:FORWARD {{ filter.forward_policy }}|string [0:0]
-:OUTPUT {{ filter.output_policy }}|string [0:0]
+:INPUT {{ filter.input_policy|string }} [0:0]
+:FORWARD {{ filter.forward_policy|string }} [0:0]
+:OUTPUT {{ filter.output_policy|string }} [0:0]
 
 # allow all loopback traffic
 -A INPUT -i lo -j ACCEPT

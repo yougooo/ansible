@@ -56,7 +56,7 @@
       group: root
   with_items:
       - {src: "{{ iptables_rules_path }}", dest: '/etc/iptables.up.rules'}
-      - {src: "{{ iptables_rules_recovery }}", dest: '/etc/network/if-up.d/iptables'}
+      - {src: "{{ iptables_rules_recovery }}", dest: '/etc/network/if-pre-up.d/iptables'}
   notify: reload iptables
 
 - name: ensure docker iptables loaded

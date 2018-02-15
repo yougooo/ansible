@@ -35,5 +35,4 @@ custom_mangle_raw_rules: ['-I PREROUTING -p tcp -m tcp --dport 80 -m state --sta
                           '-I PREROUTING -p tcp -m tcp --dport 443 -m state --state NEW -m tcpmss ! --mss 536:65535 -j DROP']
 
 custom_filter_raw_rules: ['-A INPUT -p tcp -m tcp ! --tcp-flags FIN,SYN,RST,ACK SYN -m state --state NEW -j DROP',
-                          '-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j DROP'
-                         ]
+                          '-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j DROP']

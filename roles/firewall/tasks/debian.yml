@@ -39,11 +39,9 @@
       owner: root
       group: root
       mode: 0755
+  notify: delete all rules
 
-- name: clear iptables
-  become: yes
-  become_user: root
-  command: "{{ clear_iptables_path }}"
+
 
 - name: ensure iptables rules loaded and restored
   become: yes

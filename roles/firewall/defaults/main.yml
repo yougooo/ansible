@@ -1,14 +1,14 @@
 mangle:
     - prerouting_policy: "ACCEPT"
-    - input_policy: "ACCEPT"
-    - forward_policy: "ACCEPT"
-    - output_policy: "ACCEPT"
-    - postrouting_policy: "ACCEPT"
+      input_policy: "ACCEPT"
+      forward_policy: "ACCEPT"
+      output_policy: "ACCEPT"
+      postrouting_policy: "ACCEPT"
 
 filter:
     - input_policy: "ACCEPT"
-    - forward_policy: "ACCEPT"
-    - output_policy: "ACCEPT"
+      forward_policy: "ACCEPT"
+      output_policy: "ACCEPT"
 
 iptables_rules_path: iptables.up.rules.j2
 iptables_rules_recovery: iptables_recovery.j2

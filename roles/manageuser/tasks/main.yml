@@ -1,7 +1,7 @@
 --- 
 
 - name: manage user
-  become: True
+  become: yes
   become_user: root
   user:
       name: "{{ item.user_name }}"

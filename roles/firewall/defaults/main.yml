@@ -13,7 +13,7 @@ filter:
 iptables_rules_path: iptables.up.rules.j2
 iptables_rules_recovery: iptables_recovery.j2
 
-docker_bool: yes
+docker_bool: 'True'
 docker_rules_path: docker.up.rules.j2
 docker_rules_recovery: docker_recovery.j2
 

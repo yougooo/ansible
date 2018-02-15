@@ -25,14 +25,14 @@ COMMIT
 -A OUTPUT -o lo -j ACCEPT
 
 # allows established and related incoming and outgoing connections
--A INPUT -m conntrack --ctstate ESTABLISHED, RELATED -j ACCEPT
+-A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 -A OUTPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT
 
 
 # allows tcp ports
 {% if   allowed_tcp_ports  %}
 {% for tcp_port in allowed_tcp_ports %}
--A INPUT -p -tcp --dport {{tcp_port}} -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+-A INPUT -p tcp --dport {{tcp_port}} -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 {% endfor %}
 {% endif %}
 

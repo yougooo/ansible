@@ -1,5 +1,8 @@
 ---
 
+- include: jenkins.yml
+  when: inventory_hostname in groups['jenkins']
+
 - name: ensure base tool install
   become: yes
   become_user: root
@@ -35,7 +38,7 @@
       url: https://download.docker.com/linux/debian/gpg
       state: present
 
-- name: add repo
+- name: add docker repo
   become: yes
   become_user: root
   apt_repository:

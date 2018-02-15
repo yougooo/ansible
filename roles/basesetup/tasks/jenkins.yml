@@ -1,0 +1,23 @@
+---
+
+- name: ensure jenkins key present
+  become: yes
+  become_user: root
+  apt_key:
+      url: https://pkg.jenkins.io/debian/jenkins-ci.org.key
+      state: present
+
+- name: add jenkins repo
+  become: yes
+  become_user: root
+  apt_repository:
+      repo:  deb http://pkg.jenkins.io/debian-stable binary
+      state: present
+
+- name: ensure jenkins install
+  become: yes
+  become_user: root
+  apt:
+      name: jenkins
+      state: latest
+      update_cache: yes

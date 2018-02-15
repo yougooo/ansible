@@ -1,2 +1,4 @@
 [test]
 test_vm ansible_host=35.198.69.184
+[jenkins]
+jenkins_server ansible_host=35.198.190.180

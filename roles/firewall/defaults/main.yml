@@ -24,6 +24,8 @@ clear_iptables_path: "/tmp/{{ clear_iptables }}"
 allowed_tcp_ports: [22, 80, 443, 3306, 5432]
 forwarded_tcp_ports: []
 
+jenkins_redirect_bool: 'True'
+
 allowed_udp_ports: []
 forwarded_udp_ports: []
 

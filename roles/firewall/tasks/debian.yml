@@ -23,6 +23,13 @@
       state: absent
       purge: yes
 
+- name: ensure rules.v4 file absent
+  become: yes
+  become_user: root
+  file:
+      src: /etc/iptables/rules.v4
+      state: absent
+
 - name: ensure iptables bash script present
   become: yes
   become_user: root
@@ -65,5 +72,4 @@
       - {src: "{{ docker_rules_path }}", dest: '/etc/docker.up.rules'}
       - {src: "{{ docker_rules_recovery }}", dest: '/etc/network/if-up.d/iptables_docker'}
   notify: reload docker
-  when: 
-      -  docker_bool == yes
+  when: docker_bool == 'yes'

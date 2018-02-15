@@ -45,7 +45,7 @@
   become_user: root
   command: "{{ clear_iptables_path }}"
 
-- name: ensure iptables rules loaded
+- name: ensure iptables rules loaded and restored
   become: yes
   become_user: root
   template:
@@ -59,17 +59,13 @@
       - {src: "{{ iptables_rules_recovery }}", dest: '/etc/network/if-up.d/iptables'}
   notify: reload iptables
 
-- name: ensure docker iptables restored
+- name: ensure docker iptables loaded
   become: yes
   become_user: root
   template:
-      src: "{{ item.src }}"
-      dest: "{{ item.dest }}"
+      src: '/etc/docker.up.rules'
+      dest: "{{ docker_rules_path }}"
       mode: 0775
       owner: root
       group: root
-  with_items:
-      - {src: "{{ docker_rules_path }}", dest: '/etc/docker.up.rules'}
-      - {src: "{{ docker_rules_recovery }}", dest: '/etc/network/if-pre-up.d/iptables_docker'}
-  notify: reload docker
   when: docker_bool == 'True'

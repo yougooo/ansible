@@ -59,13 +59,4 @@
       - {src: "{{ iptables_rules_recovery }}", dest: '/etc/network/if-pre-up.d/iptables'}
   notify: reload iptables
 
-- name: ensure docker iptables loaded
-  become: yes
-  become_user: root
-  template:
-      src: "{{ docker_rules_path }}"
-      dest: '/etc/docker.up.rules'
-      mode: 0775
-      owner: root
-      group: root
-  when: docker_bool == 'True'
+

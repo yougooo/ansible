@@ -42,6 +42,9 @@
   with_items:
       - {src: "{{ iptables_rules_path }}", dest: '/etc/iptables.up.rules'}
       - {src: "{{ iptables_rules_recovery }}", dest: '/etc/network/if-pre-up.d/iptables'}
-  notify: reload iptables
 
+- name: reload iptables
+  become: yes
+  become_user: root
+  shell: "/etc/network/if-pre-up.d/iptables"
 

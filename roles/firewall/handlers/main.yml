@@ -5,7 +5,3 @@
   become_user: root
   shell: "/etc/network/if-pre-up.d/iptables"
 
-- name: reload docker
-  become: yes
-  become_user: root
-  shell: "/etc/network/if-pre-up.d/iptables_docker"

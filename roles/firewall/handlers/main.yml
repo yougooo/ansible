@@ -5,7 +5,3 @@
   become_user: root
   shell: "/etc/network/if-pre-up.d/iptables"
 
-- name: delete all iptebles rules
-  become: yes
-  become_user: root
-  shell: "{{ clear_iptables_path }}"

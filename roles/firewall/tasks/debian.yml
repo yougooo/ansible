@@ -30,19 +30,6 @@
       path: /etc/iptables/rules.v4
       state: absent
 
-- name: ensure iptables bash script present
-  become: yes
-  become_user: root
-  copy:
-      src: clear_iptables.sh
-      dest: "{{ clear_iptables_path }}"
-      owner: root
-      group: root
-      mode: 0755
-  notify: delete all iptebles rules
-
-
-
 - name: ensure iptables rules loaded and restored
   become: yes
   become_user: root

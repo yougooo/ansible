@@ -63,8 +63,8 @@
   become: yes
   become_user: root
   template:
-      src: '/etc/docker.up.rules'
-      dest: "{{ docker_rules_path }}"
+      src: "{{ docker_rules_path }}"
+      dest: '/etc/docker.up.rules'
       mode: 0775
       owner: root
       group: root

@@ -7,7 +7,7 @@ mangle:
 
 filter:
       {input_policy: "ACCEPT",
-      forward_policy: "ACCEPT",
+      forward_policy: "DROP",
       output_policy: "ACCEPT"}
 
 iptables_rules_path: iptables.up.rules.j2

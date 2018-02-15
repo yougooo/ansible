@@ -1,6 +1,3 @@
 #!/bin/bash
 
 /sbin/iptables-restore < /etc/iptables.up.rules
-{% if docker_bool == 'True' %}
-/sbin/iptables-restore < /etc/docker.up.rules
-{% endif %}

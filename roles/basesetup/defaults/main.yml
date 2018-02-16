@@ -1,3 +1,3 @@
-docker_bool: "True"
-jenkins_bool: "True"
+docker_bool: "False"
+jenkins_bool: "False"
 

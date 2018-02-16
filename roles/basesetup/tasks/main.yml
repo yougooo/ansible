@@ -30,7 +30,7 @@
 
 
 - include: jenkins.yml
-  when: inventory_hostname in groups['jenkins']
+  when: jenkins_bool == "True"
 
 - include: docker.yml
   when: docker_bool == "True"

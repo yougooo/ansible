@@ -6,3 +6,12 @@
   service:
       name: sysstat
       state: restarted
+
+- name: reload docker
+  become: yes
+  become_user: root
+  service:
+      name: docker
+      state: restarted
+
+

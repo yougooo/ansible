@@ -6,11 +6,19 @@
 :OUTPUT {{ mangle.output_policy|string }} [0:0]
 :POSTROUTING {{ mangle.postrouting_policy|string }} [0:0]
 
-{% if custom_mangle_raw_rules %}
-{% for rule in custom_mangle_raw_rules %}
-{{ rule }}
-{% endfor %}
-{% endif %}
+-A PREROUTING -p tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j DROP
+-A PREROUTING -p tcp --tcp-flags FIN,SYN FIN,SYN -j DROP
+-A PREROUTING -p tcp --tcp-flags SYN,RST SYN,RST -j DROP
+-A PREROUTING -p tcp --tcp-flags FIN,RST FIN,RST -j DROP
+-A PREROUTING -p tcp --tcp-flags FIN,ACK FIN -j DROP
+-A PREROUTING -p tcp --tcp-flags ACK,URG URG -j DROP
+-A PREROUTING -p tcp --tcp-flags ACK,FIN FIN -j DROP
+-A PREROUTING -p tcp --tcp-flags ACK,PSH PSH -j DROP
+-A PREROUTING -p tcp --tcp-flags ALL ALL -j DROP
+-A PREROUTING -p tcp --tcp-flags ALL NONE -j DROP
+-A PREROUTING -p tcp --tcp-flags ALL FIN,PSH,URG -j DROP
+-A PREROUTING -p tcp --tcp-flags ALL SYN,FIN,PSH,URG -j DROP
+-A PREROUTING -p tcp --tcp-flags ALL SYN,RST,ACK,FIN,URG -j DROP
 
 COMMIT
 
@@ -28,11 +36,6 @@ COMMIT
 -A DOCKER -i docker0 -j RETURN
 {% endif %}
 
-{% if jenkins_redirect_bool == 'True' %}
--A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080
--I OUTPUT -p tcp -d 127.0.0.1 --dport 80 -j REDIRECT --to-ports 8080
-{% endif %}
-
 COMMIT
 
 *filter
@@ -40,6 +43,7 @@ COMMIT
 :INPUT {{ filter.input_policy|string }} [0:0]
 :FORWARD {{ filter.forward_policy|string }} [0:0]
 :OUTPUT {{ filter.output_policy|string }} [0:0]
+
 {% if docker_bool == 'True'%}
 :DOCKER - [0:0]
 :DOCKER-ISOLATION - [0:0]
@@ -68,19 +72,6 @@ COMMIT
 {% if   allowed_tcp_ports  %}
 {% for tcp_port in allowed_tcp_ports %}
 -A INPUT -p tcp --dport {{tcp_port}} -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-{% endfor %}
-{% endif %}
-
-# block ip from restricted_network list
-{% if restricted_network  %}
-{% for addr in restricted_network %}
--A INPUT -s {{ addr }} -j REJECT
-{% endfor %}
-{% endif %}
-
-{% if custom_filter_raw_rules %}
-{% for rule in custom_filter_raw_rules %}
-{{ rule }}
 {% endfor %}
 {% endif %}
 

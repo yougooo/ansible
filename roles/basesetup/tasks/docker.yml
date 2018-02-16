@@ -1,0 +1,23 @@
+- name: ensure docker key present
+  become: yes
+  become_user: root
+  apt_key:
+      url: https://download.docker.com/linux/debian/gpg
+      state: present
+
+- name: add docker repo
+  become: yes
+  become_user: root
+  apt_repository:
+      repo:  deb [arch=amd64] https://download.docker.com/linux/debian    stretch    stable
+      state: present
+
+- name: ensure docker install
+  become: yes
+  become_user: root
+  apt:
+      name: docker-ce
+      state: latest
+      update_cache: yes
+  notify: reload docker
+

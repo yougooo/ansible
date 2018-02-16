@@ -28,38 +28,9 @@
       line: 'ENABLED=\"true\"'
   notify: reload sysstat
 
-- name: ensure docker key present
-  become: yes
-  become_user: root
-  apt_key:
-      url: https://download.docker.com/linux/debian/gpg
-      state: present
-  when: docker_bool == "True"
-
-- name: add docker repo
-  become: yes
-  become_user: root
-  apt_repository:
-      repo:  deb [arch=amd64] https://download.docker.com/linux/debian    stretch    stable
-      state: present
-  when: docker_bool == "True"
-
-- name: ensure docker install
-  become: yes
-  become_user: root
-  apt:
-      name: docker-ce
-      state: latest
-      update_cache: yes
-  when: docker_bool == "True"
-
-- name: ensure default editor is vim
-  become: true
-  become_user: root
-  alternatives:
-      name: editor 
-      link: /usr/bin/vim
-      path: /usr/bin/vim.basic
 
 - include: jenkins.yml
   when: inventory_hostname in groups['jenkins']
+
+- include: docker.yml
+  when: docker_bool == "True"

@@ -5,14 +5,11 @@
   become_user: root
   user:
       name: "{{ item.user_name }}"
-      shell: /bin/bash
+      shell: "{{ item.shell }}"
       state: "{{ item.user_state }}"
       remove: "{{ item.user_bool }}"
       append: yes
       groups: "{{ item.user_groups|join(',') if item.user_groups is defined else ''}}"
-      generate_ssh_key: yes
-      ssh_key_bits: 2048
-      ssh_key_file: .ssh/id_rsa
   with_items:
       - "{{ users_list }}"
 
@@ -26,17 +23,31 @@
   with_items:
       - "{{ users_list }}"
   when:
-      - item.user_state == 'present' 
+      - item.user_state == 'present'
 
-- name: ensure in user privilege
+- name: ensure sudo install
+  become: yes
+  become_user: root
+  apt:
+      name: sudo
+      state: present
+
+- name: ensure /etc/sudoers.d include
   become: yes
   become_user: root
   lineinfile:
       dest: /etc/sudoers
-      state: "{{ item.user_state }}"
-      regexp: "^{{ item.user_name }}"
-      line: "{{ item.user_name }} ALL=(ALL) NOPASSWD:ALL"
-  with_items:
-      - "{{ users_list }}"
+      state: present
+      regexp: "#includedir /etc/sudoers.d"
+      line: "includedir /etc/sudoers.d"
+
+- name: ensure ansible_sudoers file present
+  become: yes
+  become_user: root
+  template:
+      src: ansible_sudoers.j2
+      dest: /etc/sudoers/ansible_sudoers
+      owner: root
+      group: root
 
 

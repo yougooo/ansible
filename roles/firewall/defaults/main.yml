@@ -1,40 +1,21 @@
 mangle:
-      {prerouting_policy: "ACCEPT",
-      input_policy: "ACCEPT",
-      forward_policy: "ACCEPT",
-      output_policy: "ACCEPT",
-      postrouting_policy: "ACCEPT"}
+    {prerouting_policy: "ACCEPT",
+    input_policy: "ACCEPT",
+    forward_policy: "ACCEPT",
+    output_policy: "ACCEPT",
+    postrouting_policy: "ACCEPT"}
 
 filter:
-      {input_policy: "ACCEPT",
-      forward_policy: "DROP",
-      output_policy: "ACCEPT"}
+    {input_policy: "ACCEPT",
+    forward_policy: "DROP",
+    output_policy: "ACCEPT"}
 
 iptables_rules_path: iptables.up.rules.j2
 iptables_rules_recovery: iptables_recovery.j2
 
-docker_bool: 'True'
-docker_rules_path: docker.up.rules.j2
-docker_rules_recovery: docker_recovery.j2
-
-clear_iptables: clear_iptables.sh
-clear_iptables_path: "/tmp/{{ clear_iptables }}"
+allowed_tcp_ports:
+    {22, 80, 443}
+    {}
 
 
-allowed_tcp_ports: [22, 80, 443, 3306, 5432]
-forwarded_tcp_ports: []
 
-jenkins_redirect_bool: 'True'
-
-allowed_udp_ports: []
-forwarded_udp_ports: []
-
-allowed_network: []
-
-restricted_network: []
-
-custom_mangle_raw_rules: ['-I PREROUTING -p tcp -m tcp --dport 80 -m state --state NEW -m tcpmss ! --mss 536:65535 -j DROP',
-                          '-I PREROUTING -p tcp -m tcp --dport 443 -m state --state NEW -m tcpmss ! --mss 536:65535 -j DROP']
-
-custom_filter_raw_rules: ['-A INPUT -p tcp -m tcp ! --tcp-flags FIN,SYN,RST,ACK SYN -m state --state NEW -j DROP',
-                          '-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j DROP']

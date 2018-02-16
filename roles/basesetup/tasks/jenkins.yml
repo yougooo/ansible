@@ -11,7 +11,7 @@
   become: yes
   become_user: root
   apt_repository:
-      repo:  deb http://pkg.jenkins.io/debian-stable binary
+      repo:  deb https://pkg.jenkins.io/debian-stable binary/
       state: present
 
 - name: ensure jenkins install

@@ -67,11 +67,10 @@ COMMIT
 -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 -A OUTPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT
 
-
 # allows tcp ports
-{% if   allowed_tcp_ports  %}
-{% for tcp_port in allowed_tcp_ports %}
--A INPUT -p tcp --dport {{tcp_port}} -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+{% if  allowed %}
+{% for rule in allowed %}
+-A INPUT -p {{rule.protocol}} -s {{ rule.source }} --dport {{ rule.port }} -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT -m comment --comment {{ rule.name }}
 {% endfor %}
 {% endif %}
 

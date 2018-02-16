@@ -1,5 +1,5 @@
 {% for user in users_list %}
 { if user.state == 'present' and 'sudo' in user.user_groups }
-{{ uses.name }}  ALL=(ALL) NOPASSWD:ALL
+{{ user.name }}  ALL=(ALL) NOPASSWD:ALL
 {endif}
 {% endfor %}

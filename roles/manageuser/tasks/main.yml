@@ -32,15 +32,6 @@
       name: sudo
       state: present
 
-- name: ensure /etc/sudoers.d include
-  become: yes
-  become_user: root
-  lineinfile:
-      dest: /etc/sudoers
-      state: present
-      regexp: "#includedir /etc/sudoers.d"
-      line: "includedir /etc/sudoers.d"
-
 - name: ensure ansible_sudoers file present
   become: yes
   become_user: root

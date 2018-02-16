@@ -12,7 +12,6 @@
       groups: "{{ item.user_groups|join(',') if item.user_groups is defined else ''}}"
   with_items:
       - "{{ users_list }}"
-  ignore_errors: yes
 
 - name: ensure ssh key added
   become: yes

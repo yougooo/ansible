@@ -23,13 +23,6 @@
       state: absent
       purge: yes
 
-- name: ensure rules.v4 file absent
-  become: yes
-  become_user: root
-  file:
-      path: /etc/iptables/rules.v4
-      state: absent
-
 - name: ensure iptables rules loaded
   become: yes
   become_user: root

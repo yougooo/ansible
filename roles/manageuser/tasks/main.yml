@@ -37,7 +37,7 @@
   become_user: root
   template:
       src: ansible_sudoers.j2
-      dest: /etc/sudoers/ansible_sudoers
+      dest: /etc/sudoers.d/ansible_sudoers
       owner: root
       group: root
 

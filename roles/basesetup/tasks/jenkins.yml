@@ -21,3 +21,10 @@
       name: jenkins
       state: latest
       update_cache: yes
+
+- name: ensure jenkins user in docker group
+  become: yes
+  become_user: root
+  user:
+      groups: 'docker'
+  when: docker_bool == "True"

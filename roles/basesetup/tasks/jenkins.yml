@@ -26,5 +26,6 @@
   become: yes
   become_user: root
   user:
+      name: 'jenkins'
       groups: 'docker'
   when: docker_bool == "True"
